@@ -58,20 +58,45 @@
 <body>
 <div class="container">
     <h2>Create QR Code</h2>
-    <form method="POST" action="{{ route('generate-qrcode') }}">
+    <form method="POST" action="{{ route('generate-qrcode') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-control">
             <label for="background_color">Background Color:</label>
-            <input type="color" name="background_color" id="background_color">
+            <input type="color" name="background_color" id="background_color"  value="#ffffff">
         </div>
         <div class="form-control">
             <label for="color">Color:</label>
-            <input type="color" name="color" id="color">
+            <input type="color" name="color" id="color"  value="#000000">
         </div>
+
+        <div class="form-control">
+            <label for="qr_gradient_start">Gradient start:</label>
+            <input type="color" name="qr_gradient_start" id="qr_gradient_start"  value="#000000">
+        </div>
+
+        <div class="form-control">
+            <label for="qr_gradient_end">Gradient end:</label>
+            <input type="color" name="qr_gradient_end" id="qr_gradient_end"  value="#000000">
+        </div>
+
+        <div class="form-control">
+            <label for="qr_gradient_type">Gradient Type:</label>
+            <select name="qr_gradient_type" id="qr_gradient_type">
+                <option value="vertical">Vertical</option>
+                <option value="horizontal">Horizontal</option>
+                <option value="diagonal">Diagonal</option>
+                <option value="inverse_diagonal">inverse Diagonal</option>
+                <option value="radial">Radial</option>
+            </select>
+
         <div class="form-control">
             <label for="data">Text:</label>
-            <input type="text" name="data" id="data">
+            <input type="text" name="data" id="data" value="Need QR">
         </div>
+            <div class="form-control">
+                <label for="logo">Logo:</label>
+                <input type="file" name="logo" id="logo">
+            </div>
         <div class="form-control">
             <label for="op">Style:</label>
             <select name="op" id="op">
@@ -97,27 +122,24 @@
             </select>
         </div>
         <div class="form-control">
+            <label for="size">Size:</label>
+            <select name="size" id="size">
+                <option value="150">150</option>
+                <option value="200">200</option>
+                <option value="250">250</option>
+                <option value="300">300</option>
+            </select>
+        </div>
+        <div class="form-control">
             <button type="submit">Create QR</button>
         </div>
     </form>
-    @if(isset($qrcode))
-        <img src="data:image/png;base64,{{ $qrcode }}" alt="Qr Code">
+    @if(isset($qrCode))
+        <img src="data:image/png;base64,{{ base64_encode($qrCode) }}" alt="QR Code">
+
     @endif
+
+
 </div>
 </body>
 </html>
-
-{{--<form method="POST" action="{{ route('phone-qrcode') }}">--}}
-{{--@csrf--}}
-{{--    <div class="form-control">--}}
-{{--        <label for="data">message</label>--}}
-{{--        <input type="text" name="data" id="data">--}}
-{{--    </div>--}}
-{{--    <div class="form-control">--}}
-{{--        <label for="phone">Phone number</label>--}}
-{{--        <input type="number" name="phone" id="phone">--}}
-{{--    </div>--}}
-{{--    <div class="form-control">--}}
-{{--        <button type="submit">Create QR</button>--}}
-{{--    </div>--}}
-{{--</form>--}}
